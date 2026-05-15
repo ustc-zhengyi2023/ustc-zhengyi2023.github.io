@@ -4,16 +4,16 @@ title: Blog
 permalink: /posts/
 ---
 
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script>
 window.MathJax = {
+  loader: {load: ['input/tex', 'output/chtml']},
   tex: {
     inlineMath: [['$', '$']],
     displayMath: [['$$', '$$']]
   }
 };
 </script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
 
 <style>
 .page-content {

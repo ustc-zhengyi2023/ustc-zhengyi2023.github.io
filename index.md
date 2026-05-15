@@ -223,7 +223,7 @@ window.MathJax = {
 <div class="section">
     <h2>About Me</h2>
     <p>你好！我是一名来自<strong>中国科学技术大学</strong>的学生。</p>
-    <p>我的研究方向是<strong>计算机视觉与图形学</strong>，技术兴趣包括算法、数据结构以及相关领域。</p>
+    <p>我的研究方向是<strong>计算数学方向</strong>，技术兴趣包括算法、数据结构以及相关领域。</p>
     <p>在这里分享我的学习笔记、技术心得和生活感悟。</p>
     <div class="interest-tags">
         <span class="tag">算法</span>
@@ -241,15 +241,15 @@ window.MathJax = {
     <div class="skills-grid">
         <div class="skill-card">
             <h4>编程语言</h4>
-            <p>Python, C++, JavaScript</p>
+            <p>Python, C++</p>
         </div>
         <div class="skill-card">
             <h4>开发工具</h4>
-            <p>Git, Docker, Linux</p>
+            <p>Git,VSCode...</p>
         </div>
         <div class="skill-card">
             <h4>技术领域</h4>
-            <p>算法设计, Web开发</p>
+            <p>算法设计...</p>
         </div>
         <div class="skill-card">
             <h4>学术技能</h4>

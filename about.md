@@ -111,22 +111,23 @@ window.MathJax = {
 
 <div class="section">
     <h2>About Me</h2>
-    <p>你好！我是一名来自<strong>中国科学技术大学</strong>的学生，目前专注于计算机科学与技术相关领域的学习与研究。</p>
-    <p>我热爱算法与数据结构，享受解决复杂问题带来的成就感。同时，我也对计算机视觉、机器学习等前沿技术充满兴趣。</p>
+    <p>你好！我是一名来自<strong>中国科学技术大学</strong>的学生。</p>
+    <p>我的研究方向是<strong>计算数学方向</strong>，技术兴趣包括算法、数据结构以及相关领域。</p>
+    <p>在这里分享我的学习笔记、技术心得和生活感悟。</p>
 </div>
 
 <div class="section">
     <h2>Education</h2>
     <h3>中国科学技术大学</h3>
-    <p>计算机科学与技术专业</p>
+    <p>计算数学方向</p>
 </div>
 
 <div class="section">
     <h2>Research Interests</h2>
     <ul>
-        <li>计算机视觉</li>
-        <li>计算机图形学</li>
+        <li>计算数学</li>
         <li>计算机辅助几何设计 (CAGD)</li>
+        <li>计算机图形学</li>
         <li>机器学习与深度学习</li>
     </ul>
 </div>
@@ -136,11 +137,9 @@ window.MathJax = {
     <div>
         <span class="skill-tag">Python</span>
         <span class="skill-tag">C++</span>
-        <span class="skill-tag">JavaScript</span>
         <span class="skill-tag">Git</span>
-        <span class="skill-tag">Docker</span>
+        <span class="skill-tag">VSCode</span>
         <span class="skill-tag">LaTeX</span>
-        <span class="skill-tag">Linux</span>
         <span class="skill-tag">PyTorch</span>
     </div>
 </div>

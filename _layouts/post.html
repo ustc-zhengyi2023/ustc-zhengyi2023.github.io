@@ -1,0 +1,242 @@
+---
+layout: default
+---
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - Zhengyi's Homepage</title>
+    
+    <!-- MathJax 3 -->
+    <script>
+    window.MathJax = {
+      loader: {load: ['input/tex', 'output/chtml', 'ui/menu']},
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+        processEscapes: true,
+        packages: {'[+]': ['ams', 'newcommand', 'configmacros']}
+      },
+      chtml: {
+        scale: 1.1
+      },
+      startup: {
+        ready: function() {
+          MathJax.startup.defaultReady();
+        }
+      }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+        .post-container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .post-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+        .post-header h1 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .post-meta {
+            opacity: 0.9;
+            font-size: 0.95em;
+        }
+        .post-content {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        .post-content h1 {
+            font-size: 1.8em;
+            color: #4a5568;
+            margin-top: 35px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        .post-content h2 {
+            font-size: 1.5em;
+            color: #4a5568;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #667eea;
+        }
+        .post-content h3 {
+            font-size: 1.2em;
+            color: #2d3748;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+        .post-content p {
+            line-height: 1.9;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .post-content ul, .post-content ol {
+            line-height: 1.9;
+            margin-bottom: 15px;
+            padding-left: 25px;
+        }
+        .post-content li {
+            margin-bottom: 8px;
+        }
+        .post-content blockquote {
+            border-left: 4px solid #667eea;
+            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
+            margin: 20px 0;
+            padding: 15px 20px;
+            border-radius: 0 10px 10px 0;
+            color: #555;
+        }
+        .post-content blockquote p {
+            margin-bottom: 0;
+        }
+        .post-content strong {
+            color: #2d3748;
+        }
+        .post-content code {
+            background: #f7fafc;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "SF Mono", Monaco, "Consolas", monospace;
+            font-size: 0.88em;
+            color: #e53e3e;
+        }
+        .post-content pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        .post-content pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+            font-size: 0.9em;
+        }
+        .post-content hr {
+            border: none;
+            border-top: 1px dashed #e2e8f0;
+            margin: 30px 0;
+        }
+        .post-content img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+        .post-content a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .post-content a:hover {
+            text-decoration: underline;
+        }
+        .post-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .post-content th, .post-content td {
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+        }
+        .post-content th {
+            background: #f7fafc;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .nav-links a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .nav-links span {
+            color: #cbd5e0;
+        }
+        @media (max-width: 768px) {
+            .post-header h1 {
+                font-size: 1.6em;
+            }
+            .post-content {
+                padding: 25px;
+            }
+            .post-content h1 {
+                font-size: 1.5em;
+            }
+            .post-content h2 {
+                font-size: 1.3em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="post-container">
+        <nav class="nav-links">
+            <a href="/">首页</a>
+            <span>/</span>
+            <a href="/posts/">博客</a>
+            <span>/</span>
+            <span>{{ page.title }}</span>
+        </nav>
+        
+        <article>
+            <header class="post-header">
+                <h1>{{ page.title }}</h1>
+                <div class="post-meta">
+                    <span>{{ page.date | date: "%Y-%m-%d" }}</span>
+                    {% if page.categories %}
+                    | <span>{{ page.categories }}</span>
+                    {% endif %}
+                </div>
+            </header>
+            
+            <div class="post-content">
+                {{ content }}
+            </div>
+        </article>
+    </div>
+</body>
+</html>
