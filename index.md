@@ -3,6 +3,17 @@ layout: page
 title: 首页
 ---
 
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  }
+};
+</script>
+
 <style>
 .hero {
     text-align: center;
@@ -273,7 +284,7 @@ title: 首页
         <a href="https://github.com/ustc-zhengyi2023" class="contact-item">
             💻 GitHub
         </a>
-        <a href="mailto:your.email@example.com" class="contact-item">
+        <a href="mailto:zhengyi2023@mail.ustc.edu.cn" class="contact-item">
             📧 Email
         </a>
     </div>

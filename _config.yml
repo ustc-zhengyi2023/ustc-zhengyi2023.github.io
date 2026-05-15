@@ -1,26 +1,28 @@
-title: 个人主页
-author: 你的名字
-description: 算法与技术的学习记录
+title: Zhengyi's Homepage
+author: Zhengyi
+description: 个人主页 | 学习记录 | 技术博客
 
-# GitHub Pages 设置
+# GitHub Pages
 timezone: Asia/Shanghai
 future: true
-show_drafts: false
-relative_permalinks: false
+theme: minima
 
 # Markdown 设置
 markdown: kramdown
 kramdown:
   input: GFM
+  math_engine: mathjax
   syntax_highlighter: rouge
 
-# 分页
-paginate: 10
-paginate_path: /blog/page:num/
+# 导航栏链接
+header_pages:
+  - about.md
 
-# 构建设置
-theme: minima
+# 博客设置
 collections:
   posts:
     output: true
     permalink: /posts/:year-:month-:day-:title/
+
+# 分页
+paginate: 10

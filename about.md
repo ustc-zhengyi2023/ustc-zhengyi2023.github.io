@@ -4,6 +4,17 @@ title: About
 permalink: /about/
 ---
 
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']]
+  }
+};
+</script>
+
 <style>
 .page-content {
     max-width: 800px;
@@ -141,7 +152,7 @@ permalink: /about/
         <a href="https://github.com/ustc-zhengyi2023" class="contact-btn">
             💻 GitHub
         </a>
-        <a href="mailto:your.email@example.com" class="contact-btn">
+        <a href="mailto:zhengyi2023@mail.ustc.edu.cn" class="contact-btn">
             📧 Email
         </a>
     </div>
