@@ -4,7 +4,6 @@ title: 首页
 ---
 
 <style>
-/* ===== 自定义样式 ===== */
 .hero {
     text-align: center;
     padding: 60px 30px;
@@ -197,7 +196,7 @@ title: 首页
 
 <!-- 头部区域 -->
 <div class="hero">
-    <img src="https://avatars.githubusercontent.com/u/your-github-id" alt="Avatar" class="avatar">
+    <img src="/img/head.jpg" alt="Avatar" class="avatar">
     <h1>Welcome</h1>
     <p class="subtitle">算法 · 技术 · 成长</p>
     <div class="social-links">
