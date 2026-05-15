@@ -8,27 +8,8 @@ layout: default
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} - Zhengyi's Homepage</title>
     
-    <!-- MathJax 3 - 配置支持 script type="math/tex" -->
-    <script>
-    window.MathJax = {
-      loader: {load: ['input/tex', 'output/chtml', 'ui/menu']},
-      tex: {
-        inlineMath: [['$', '$']],
-        displayMath: [['$$', '$$']],
-        processEscapes: true,
-        packages: {'[+]': ['ams', 'newcommand', 'configmacros']}
-      },
-      chtml: {
-        scale: 1.1
-      },
-      startup: {
-        ready: function() {
-          MathJax.startup.defaultReady();
-        }
-      }
-    };
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     
     <style>
         * {
@@ -196,13 +177,15 @@ layout: default
         .nav-links span {
             color: #cbd5e0;
         }
-        /* MathJax formula styling */
-        .MathJax {
+        /* KaTeX formula styling */
+        .katex-display {
+            margin: 1.5em 0 !important;
             overflow-x: auto;
             overflow-y: hidden;
+            padding: 10px 0;
         }
-        mjx-container {
-            margin: 1em 0 !important;
+        .katex {
+            font-size: 1.1em;
         }
         @media (max-width: 768px) {
             .post-header h1 {
@@ -241,10 +224,52 @@ layout: default
                 </div>
             </header>
             
-            <div class="post-content">
+            <div class="post-content" id="post-content">
                 {{ content }}
             </div>
         </article>
     </div>
+    
+    <!-- KaTeX JS -->
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 处理 display 公式 (mode=display)
+        var displayScripts = document.querySelectorAll('#post-content script[type="math/tex; mode=display"]');
+        displayScripts.forEach(function(script) {
+            try {
+                var html = katex.renderToString(script.textContent, {
+                    displayMode: true,
+                    throwOnError: false,
+                    trust: true
+                });
+                var wrapper = document.createElement('div');
+                wrapper.className = 'katex-display';
+                wrapper.innerHTML = html;
+                script.parentNode.replaceChild(wrapper, script);
+            } catch (e) {
+                console.error('KaTeX error:', e);
+            }
+        });
+        
+        // 处理 inline 公式 (无 mode 或 mode=inline)
+        var inlineScripts = document.querySelectorAll('#post-content script[type="math/tex"]');
+        inlineScripts.forEach(function(script) {
+            if (script.getAttribute('mode') === 'display') return; // 已处理
+            try {
+                var html = katex.renderToString(script.textContent, {
+                    displayMode: false,
+                    throwOnError: false,
+                    trust: true
+                });
+                var wrapper = document.createElement('span');
+                wrapper.innerHTML = html;
+                script.parentNode.replaceChild(wrapper, script);
+            } catch (e) {
+                console.error('KaTeX error:', e);
+            }
+        });
+    });
+    </script>
 </body>
 </html>
