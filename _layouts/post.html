@@ -235,66 +235,105 @@ layout: default
     <script>
     document.addEventListener("DOMContentLoaded", function() {
         var content = document.getElementById('post-content');
+        if (!content) return;
         
-        // 1. 处理 script 标签格式 (mode=display)
-        var displayScripts = content.querySelectorAll('script[type="math/tex; mode=display"]');
-        displayScripts.forEach(function(script) {
-            try {
-                var html = katex.renderToString(script.textContent, {
-                    displayMode: true,
-                    throwOnError: false,
-                    trust: true
-                });
-                var wrapper = document.createElement('div');
-                wrapper.className = 'katex-display';
-                wrapper.innerHTML = html;
-                script.parentNode.replaceChild(wrapper, script);
-            } catch (e) {}
-        });
+        // 先处理 script 标签格式
+        function processScripts() {
+            // 处理 display 公式
+            var scripts = content.querySelectorAll('script[type="math/tex; mode=display"]');
+            scripts.forEach(function(script) {
+                try {
+                    var html = katex.renderToString(script.textContent, {
+                        displayMode: true,
+                        throwOnError: false,
+                        strict: false
+                    });
+                    var div = document.createElement('div');
+                    div.className = 'katex-display';
+                    div.innerHTML = html;
+                    script.parentNode.replaceChild(div, script);
+                } catch (e) {
+                    console.error('KaTeX display error:', e);
+                }
+            });
+            
+            // 处理 inline 公式
+            scripts = content.querySelectorAll('script[type="math/tex"]');
+            scripts.forEach(function(script) {
+                if (script.getAttribute('mode')) return;
+                try {
+                    var html = katex.renderToString(script.textContent, {
+                        displayMode: false,
+                        throwOnError: false,
+                        strict: false
+                    });
+                    var span = document.createElement('span');
+                    span.innerHTML = html;
+                    script.parentNode.replaceChild(span, script);
+                } catch (e) {
+                    console.error('KaTeX inline error:', e);
+                }
+            });
+        }
         
-        // 2. 处理 script 标签格式 (inline)
-        var inlineScripts = content.querySelectorAll('script[type="math/tex"]:not([mode])');
-        inlineScripts.forEach(function(script) {
-            try {
-                var html = katex.renderToString(script.textContent, {
-                    displayMode: false,
-                    throwOnError: false,
-                    trust: true
-                });
-                script.parentNode.innerHTML = script.parentNode.innerHTML.replace(script.outerHTML, html);
-            } catch (e) {}
-        });
-        
-        // 3. 处理 $$...$$ 格式 (display)
-        var htmlContent = content.innerHTML;
-        htmlContent = htmlContent.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
-            try {
-                return '<div class="katex-display">' + katex.renderToString(formula.trim(), {
-                    displayMode: true,
-                    throwOnError: false,
-                    trust: true
-                }) + '</div>';
-            } catch (e) {
-                return match;
+        // 处理 $...$ 和 $$...$$ 格式
+        function processDollarSigns() {
+            // 保存已处理的 KaTeX HTML
+            var processed = [];
+            
+            // 先收集所有 .katex 元素的内容，替换为占位符
+            content.querySelectorAll('.katex').forEach(function(el) {
+                var placeholder = '%%KATEX' + processed.length + '%%';
+                processed.push(el.outerHTML);
+                el.innerHTML = placeholder;
+            });
+            
+            // 处理 $$...$$ display 公式
+            var html = content.innerHTML;
+            html = html.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
+                try {
+                    var result = katex.renderToString(formula.trim(), {
+                        displayMode: true,
+                        throwOnError: false,
+                        strict: false
+                    });
+                    return '<div class="katex-display">' + result + '</div>';
+                } catch (e) {
+                    console.error('KaTeX $$ error:', e, formula);
+                    return match;
+                }
+            });
+            
+            // 处理 $...$ inline 公式
+            // 使用更宽松的正则，处理公式内可能有 $ 的情况
+            html = html.replace(/\$((?:[^$\\]|\\.|\n)*?)\$/g, function(match, formula) {
+                // 跳过已经是 KaTeX 占位符
+                if (formula.match(/^%%KATEX\d+%%$/)) return match;
+                try {
+                    return katex.renderToString(formula.trim(), {
+                        displayMode: false,
+                        throwOnError: false,
+                        strict: false
+                    });
+                } catch (e) {
+                    console.error('KaTeX $ error:', e, formula);
+                    return match;
+                }
+            });
+            
+            // 恢复已处理的 KaTeX 内容
+            processed.forEach(function(html, i) {
+                content.innerHTML = content.innerHTML.replace('%%KATEX' + i + '%%', html);
+            });
+            
+            if (!content.innerHTML.includes('%%KATEX')) {
+                content.innerHTML = html;
             }
-        });
+        }
         
-        // 4. 处理 $...$ 格式 (inline) - 避免匹配已处理的
-        htmlContent = htmlContent.replace(/\$([^\$\n]+?)\$/g, function(match, formula) {
-            // 跳过已经是 KaTeX 渲染结果的
-            if (formula.indexOf('<') !== -1) return match;
-            try {
-                return katex.renderToString(formula.trim(), {
-                    displayMode: false,
-                    throwOnError: false,
-                    trust: true
-                });
-            } catch (e) {
-                return match;
-            }
-        });
-        
-        content.innerHTML = htmlContent;
+        // 执行处理
+        processScripts();
+        processDollarSigns();
     });
     </script>
 </body>
