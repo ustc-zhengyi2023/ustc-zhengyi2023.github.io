@@ -1,0 +1,26 @@
+title: 个人主页
+author: 你的名字
+description: 算法与技术的学习记录
+
+# GitHub Pages 设置
+timezone: Asia/Shanghai
+future: true
+show_drafts: false
+relative_permalinks: false
+
+# Markdown 设置
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+
+# 分页
+paginate: 10
+paginate_path: /blog/page:num/
+
+# 构建设置
+theme: minima
+collections:
+  posts:
+    output: true
+    permalink: /posts/:year-:month-:day-:title/
