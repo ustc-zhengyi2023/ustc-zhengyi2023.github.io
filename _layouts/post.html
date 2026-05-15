@@ -234,8 +234,10 @@ layout: default
     <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // 处理 display 公式 (mode=display)
-        var displayScripts = document.querySelectorAll('#post-content script[type="math/tex; mode=display"]');
+        var content = document.getElementById('post-content');
+        
+        // 1. 处理 script 标签格式 (mode=display)
+        var displayScripts = content.querySelectorAll('script[type="math/tex; mode=display"]');
         displayScripts.forEach(function(script) {
             try {
                 var html = katex.renderToString(script.textContent, {
@@ -247,28 +249,52 @@ layout: default
                 wrapper.className = 'katex-display';
                 wrapper.innerHTML = html;
                 script.parentNode.replaceChild(wrapper, script);
-            } catch (e) {
-                console.error('KaTeX error:', e);
-            }
+            } catch (e) {}
         });
         
-        // 处理 inline 公式 (无 mode 或 mode=inline)
-        var inlineScripts = document.querySelectorAll('#post-content script[type="math/tex"]');
+        // 2. 处理 script 标签格式 (inline)
+        var inlineScripts = content.querySelectorAll('script[type="math/tex"]:not([mode])');
         inlineScripts.forEach(function(script) {
-            if (script.getAttribute('mode') === 'display') return; // 已处理
             try {
                 var html = katex.renderToString(script.textContent, {
                     displayMode: false,
                     throwOnError: false,
                     trust: true
                 });
-                var wrapper = document.createElement('span');
-                wrapper.innerHTML = html;
-                script.parentNode.replaceChild(wrapper, script);
+                script.parentNode.innerHTML = script.parentNode.innerHTML.replace(script.outerHTML, html);
+            } catch (e) {}
+        });
+        
+        // 3. 处理 $$...$$ 格式 (display)
+        var htmlContent = content.innerHTML;
+        htmlContent = htmlContent.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
+            try {
+                return '<div class="katex-display">' + katex.renderToString(formula.trim(), {
+                    displayMode: true,
+                    throwOnError: false,
+                    trust: true
+                }) + '</div>';
             } catch (e) {
-                console.error('KaTeX error:', e);
+                return match;
             }
         });
+        
+        // 4. 处理 $...$ 格式 (inline) - 避免匹配已处理的
+        htmlContent = htmlContent.replace(/\$([^\$\n]+?)\$/g, function(match, formula) {
+            // 跳过已经是 KaTeX 渲染结果的
+            if (formula.indexOf('<') !== -1) return match;
+            try {
+                return katex.renderToString(formula.trim(), {
+                    displayMode: false,
+                    throwOnError: false,
+                    trust: true
+                });
+            } catch (e) {
+                return match;
+            }
+        });
+        
+        content.innerHTML = htmlContent;
     });
     </script>
 </body>
