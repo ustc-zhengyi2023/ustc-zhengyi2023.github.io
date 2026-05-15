@@ -237,103 +237,98 @@ layout: default
         var content = document.getElementById('post-content');
         if (!content) return;
         
-        // 先处理 script 标签格式
-        function processScripts() {
-            // 处理 display 公式
-            var scripts = content.querySelectorAll('script[type="math/tex; mode=display"]');
-            scripts.forEach(function(script) {
-                try {
-                    var html = katex.renderToString(script.textContent, {
-                        displayMode: true,
-                        throwOnError: false,
-                        strict: false
-                    });
-                    var div = document.createElement('div');
-                    div.className = 'katex-display';
-                    div.innerHTML = html;
-                    script.parentNode.replaceChild(div, script);
-                } catch (e) {
-                    console.error('KaTeX display error:', e);
-                }
-            });
-            
-            // 处理 inline 公式
-            scripts = content.querySelectorAll('script[type="math/tex"]');
-            scripts.forEach(function(script) {
-                if (script.getAttribute('mode')) return;
-                try {
-                    var html = katex.renderToString(script.textContent, {
-                        displayMode: false,
-                        throwOnError: false,
-                        strict: false
-                    });
-                    var span = document.createElement('span');
-                    span.innerHTML = html;
-                    script.parentNode.replaceChild(span, script);
-                } catch (e) {
-                    console.error('KaTeX inline error:', e);
-                }
-            });
-        }
+        // 第一步：处理 script 标签格式
+        var scripts = content.querySelectorAll('script[type^="math/tex"]');
+        scripts.forEach(function(script) {
+            var isDisplay = script.getAttribute('mode') === 'display';
+            try {
+                var html = katex.renderToString(script.textContent, {
+                    displayMode: isDisplay,
+                    throwOnError: false,
+                    strict: false
+                });
+                var wrapper = isDisplay ? document.createElement('div') : document.createElement('span');
+                if (isDisplay) wrapper.className = 'katex-display';
+                wrapper.innerHTML = html;
+                script.parentNode.replaceChild(wrapper, script);
+            } catch (e) {
+                console.error('KaTeX script error:', e);
+            }
+        });
         
-        // 处理 $...$ 和 $$...$$ 格式
-        function processDollarSigns() {
-            // 保存已处理的 KaTeX HTML
-            var processed = [];
-            
-            // 先收集所有 .katex 元素的内容，替换为占位符
-            content.querySelectorAll('.katex').forEach(function(el) {
-                var placeholder = '%%KATEX' + processed.length + '%%';
-                processed.push(el.outerHTML);
-                el.innerHTML = placeholder;
-            });
-            
-            // 处理 $$...$$ display 公式
-            var html = content.innerHTML;
-            html = html.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
-                try {
-                    var result = katex.renderToString(formula.trim(), {
-                        displayMode: true,
-                        throwOnError: false,
-                        strict: false
-                    });
-                    return '<div class="katex-display">' + result + '</div>';
-                } catch (e) {
-                    console.error('KaTeX $$ error:', e, formula);
-                    return match;
+        // 第二步：处理 $$...$$ 格式（块级公式）
+        content.innerHTML = content.innerHTML.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
+            try {
+                var html = katex.renderToString(formula.trim(), {
+                    displayMode: true,
+                    throwOnError: false,
+                    strict: false
+                });
+                return '<div class="katex-display">' + html + '</div>';
+            } catch (e) {
+                console.error('KaTeX $$ error:', e);
+                return match;
+            }
+        });
+        
+        // 第三步：处理 $...$ 格式（内联公式）
+        // 找到所有文本节点并处理
+        function processTextNodes(node) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                var text = node.textContent;
+                var pattern = /\$((?:[^$\\]|\\.|\n)*?)\$/g;
+                if (pattern.test(text)) {
+                    var parent = node.parentNode;
+                    var fragment = document.createDocumentFragment();
+                    var lastIndex = 0;
+                    var match;
+                    
+                    // 重置正则
+                    pattern.lastIndex = 0;
+                    
+                    while ((match = pattern.exec(text)) !== null) {
+                        // 添加 $ 之前的文本
+                        if (match.index > lastIndex) {
+                            fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+                        }
+                        
+                        // 添加渲染后的公式
+                        try {
+                            var html = katex.renderToString(match[1].trim(), {
+                                displayMode: false,
+                                throwOnError: false,
+                                strict: false
+                            });
+                            var span = document.createElement('span');
+                            span.innerHTML = html;
+                            fragment.appendChild(span);
+                        } catch (e) {
+                            // 如果渲染失败，保留原文
+                            fragment.appendChild(document.createTextNode(match[0]));
+                        }
+                        
+                        lastIndex = pattern.lastIndex;
+                    }
+                    
+                    // 添加剩余文本
+                    if (lastIndex < text.length) {
+                        fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+                    }
+                    
+                    // 替换原节点
+                    if (fragment.childNodes.length > 0) {
+                        parent.replaceChild(fragment, node);
+                    }
                 }
-            });
-            
-            // 处理 $...$ inline 公式
-            // 使用更宽松的正则，处理公式内可能有 $ 的情况
-            html = html.replace(/\$((?:[^$\\]|\\.|\n)*?)\$/g, function(match, formula) {
-                // 跳过已经是 KaTeX 占位符
-                if (formula.match(/^%%KATEX\d+%%$/)) return match;
-                try {
-                    return katex.renderToString(formula.trim(), {
-                        displayMode: false,
-                        throwOnError: false,
-                        strict: false
-                    });
-                } catch (e) {
-                    console.error('KaTeX $ error:', e, formula);
-                    return match;
+            } else if (node.nodeType === Node.ELEMENT_NODE && node.className !== 'katex-display') {
+                // 跳过已处理的元素
+                if (!node.classList.contains('katex') && node.id !== 'post-content') {
+                    Array.from(node.childNodes).forEach(processTextNodes);
                 }
-            });
-            
-            // 恢复已处理的 KaTeX 内容
-            processed.forEach(function(html, i) {
-                content.innerHTML = content.innerHTML.replace('%%KATEX' + i + '%%', html);
-            });
-            
-            if (!content.innerHTML.includes('%%KATEX')) {
-                content.innerHTML = html;
             }
         }
         
-        // 执行处理
-        processScripts();
-        processDollarSigns();
+        Array.from(content.childNodes).forEach(processTextNodes);
     });
     </script>
 </body>
