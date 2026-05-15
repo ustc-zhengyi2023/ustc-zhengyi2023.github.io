@@ -7,12 +7,11 @@ timezone: Asia/Shanghai
 future: true
 theme: minima
 
-# Markdown 设置 - 禁用 Kramdown 数学处理
+# Markdown 设置
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
-  math_engine: nil
 
 # 导航栏链接
 header_pages:

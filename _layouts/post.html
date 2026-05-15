@@ -8,13 +8,8 @@ layout: default
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page.title }} - Zhengyi's Homepage</title>
     
-    <!-- KaTeX CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-    
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
@@ -22,11 +17,7 @@ layout: default
             margin: 0;
             color: #333;
         }
-        .post-container {
-            max-width: 850px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+        .post-container { max-width: 850px; margin: 0 auto; padding: 40px 20px; }
         .post-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -36,172 +27,68 @@ layout: default
             text-align: center;
             box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
         }
-        .post-header h1 {
-            font-size: 2.2em;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-        .post-meta {
-            opacity: 0.9;
-            font-size: 0.95em;
-        }
+        .post-header h1 { font-size: 2.2em; margin-bottom: 15px; font-weight: 600; }
+        .post-meta { opacity: 0.9; font-size: 0.95em; }
         .post-content {
             background: #fff;
             border-radius: 16px;
             padding: 40px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
-        .post-content h1 {
-            font-size: 1.8em;
-            color: #4a5568;
-            margin-top: 35px;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #667eea;
-        }
-        .post-content h2 {
-            font-size: 1.5em;
-            color: #4a5568;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #667eea;
-        }
-        .post-content h3 {
-            font-size: 1.2em;
-            color: #2d3748;
-            margin-top: 25px;
-            margin-bottom: 12px;
-        }
-        .post-content p {
-            line-height: 1.9;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        .post-content ul, .post-content ol {
-            line-height: 1.9;
-            margin-bottom: 15px;
-            padding-left: 25px;
-        }
-        .post-content li {
-            margin-bottom: 8px;
-        }
-        .post-content blockquote {
-            border-left: 4px solid #667eea;
-            background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%);
-            margin: 20px 0;
-            padding: 15px 20px;
-            border-radius: 0 10px 10px 0;
-            color: #555;
-        }
-        .post-content blockquote p {
-            margin-bottom: 0;
-        }
-        .post-content strong {
-            color: #2d3748;
-        }
-        .post-content code {
-            background: #f7fafc;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: "SF Mono", Monaco, "Consolas", monospace;
-            font-size: 0.88em;
-            color: #e53e3e;
-        }
-        .post-content pre {
-            background: #2d3748;
-            color: #e2e8f0;
-            padding: 20px;
-            border-radius: 10px;
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-        .post-content pre code {
-            background: none;
-            padding: 0;
-            color: inherit;
-            font-size: 0.9em;
-        }
-        .post-content hr {
-            border: none;
-            border-top: 1px dashed #e2e8f0;
-            margin: 30px 0;
-        }
-        .post-content img {
-            max-width: 100%;
-            border-radius: 10px;
-        }
-        .post-content a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        .post-content a:hover {
-            text-decoration: underline;
-        }
-        .post-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        .post-content th, .post-content td {
-            border: 1px solid #e2e8f0;
-            padding: 10px;
-            text-align: left;
-        }
-        .post-content th {
-            background: #f7fafc;
-        }
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-        }
-        .back-link:hover {
-            text-decoration: underline;
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        .nav-links a {
-            color: #667eea;
-            text-decoration: none;
-        }
-        .nav-links a:hover {
-            text-decoration: underline;
-        }
-        .nav-links span {
-            color: #cbd5e0;
-        }
-        /* KaTeX formula styling */
-        .katex-display {
-            margin: 1.5em 0 !important;
-            overflow-x: auto;
-            overflow-y: hidden;
-            padding: 10px 0;
-        }
-        .katex {
-            font-size: 1.1em;
-        }
+        .post-content h1 { font-size: 1.8em; color: #4a5568; margin-top: 35px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+        .post-content h2 { font-size: 1.5em; color: #4a5568; margin-top: 30px; margin-bottom: 15px; padding-bottom: 8px; border-bottom: 2px solid #667eea; }
+        .post-content h3 { font-size: 1.2em; color: #2d3748; margin-top: 25px; margin-bottom: 12px; }
+        .post-content p { line-height: 1.9; margin-bottom: 15px; color: #333; }
+        .post-content ul, .post-content ol { line-height: 1.9; margin-bottom: 15px; padding-left: 25px; }
+        .post-content li { margin-bottom: 8px; }
+        .post-content blockquote { border-left: 4px solid #667eea; background: linear-gradient(135deg, #f8fafc 0%, #edf2f7 100%); margin: 20px 0; padding: 15px 20px; border-radius: 0 10px 10px 0; color: #555; }
+        .post-content blockquote p { margin-bottom: 0; }
+        .post-content strong { color: #2d3748; }
+        .post-content code { background: #f7fafc; padding: 2px 6px; border-radius: 4px; font-family: "SF Mono", Monaco, "Consolas", monospace; font-size: 0.88em; color: #e53e3e; }
+        .post-content pre { background: #2d3748; color: #e2e8f0; padding: 20px; border-radius: 10px; overflow-x: auto; margin: 20px 0; }
+        .post-content pre code { background: none; padding: 0; color: inherit; font-size: 0.9em; }
+        .post-content hr { border: none; border-top: 1px dashed #e2e8f0; margin: 30px 0; }
+        .post-content img { max-width: 100%; border-radius: 10px; }
+        .post-content a { color: #667eea; text-decoration: none; }
+        .post-content a:hover { text-decoration: underline; }
+        .post-content table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .post-content th, .post-content td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
+        .post-content th { background: #f7fafc; }
+        .nav-links { display: flex; gap: 20px; margin-bottom: 30px; font-weight: 500; }
+        .nav-links a { color: #667eea; text-decoration: none; }
+        .nav-links a:hover { text-decoration: underline; }
+        .nav-links span { color: #cbd5e0; }
         @media (max-width: 768px) {
-            .post-header h1 {
-                font-size: 1.6em;
-            }
-            .post-content {
-                padding: 25px;
-            }
-            .post-content h1 {
-                font-size: 1.5em;
-            }
-            .post-content h2 {
-                font-size: 1.3em;
-            }
+            .post-header h1 { font-size: 1.6em; }
+            .post-content { padding: 25px; }
         }
     </style>
+    
+    <!-- MathJax 3 -->
+    <script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$']],
+            displayMath: [['$$', '$$']],
+            processEscapes: true,
+            packages: {'[+]': ['ams', 'newcommand', 'configmacros', 'extpfeil']}
+        },
+        svg: {
+            fontCache: 'global',
+            scale: 1.1
+        },
+        startup: {
+            ready: function() {
+                MathJax.startup.defaultReady();
+                MathJax.startup.promise.then(function() {
+                    // 渲染完成后检查未渲染的公式
+                    MathJax.typesetPromise();
+                });
+            }
+        }
+    };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
     <div class="post-container">
@@ -224,112 +111,10 @@ layout: default
                 </div>
             </header>
             
-            <div class="post-content" id="post-content">
+            <div class="post-content">
                 {{ content }}
             </div>
         </article>
     </div>
-    
-    <!-- KaTeX JS -->
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var content = document.getElementById('post-content');
-        if (!content) return;
-        
-        // 第一步：处理 script 标签格式
-        var scripts = content.querySelectorAll('script[type^="math/tex"]');
-        scripts.forEach(function(script) {
-            var isDisplay = script.getAttribute('mode') === 'display';
-            try {
-                var html = katex.renderToString(script.textContent, {
-                    displayMode: isDisplay,
-                    throwOnError: false,
-                    strict: false
-                });
-                var wrapper = isDisplay ? document.createElement('div') : document.createElement('span');
-                if (isDisplay) wrapper.className = 'katex-display';
-                wrapper.innerHTML = html;
-                script.parentNode.replaceChild(wrapper, script);
-            } catch (e) {
-                console.error('KaTeX script error:', e);
-            }
-        });
-        
-        // 第二步：处理 $$...$$ 格式（块级公式）
-        content.innerHTML = content.innerHTML.replace(/\$\$([\s\S]*?)\$\$/g, function(match, formula) {
-            try {
-                var html = katex.renderToString(formula.trim(), {
-                    displayMode: true,
-                    throwOnError: false,
-                    strict: false
-                });
-                return '<div class="katex-display">' + html + '</div>';
-            } catch (e) {
-                console.error('KaTeX $$ error:', e);
-                return match;
-            }
-        });
-        
-        // 第三步：处理 $...$ 格式（内联公式）
-        // 找到所有文本节点并处理
-        function processTextNodes(node) {
-            if (node.nodeType === Node.TEXT_NODE) {
-                var text = node.textContent;
-                var pattern = /\$((?:[^$\\]|\\.|\n)*?)\$/g;
-                if (pattern.test(text)) {
-                    var parent = node.parentNode;
-                    var fragment = document.createDocumentFragment();
-                    var lastIndex = 0;
-                    var match;
-                    
-                    // 重置正则
-                    pattern.lastIndex = 0;
-                    
-                    while ((match = pattern.exec(text)) !== null) {
-                        // 添加 $ 之前的文本
-                        if (match.index > lastIndex) {
-                            fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
-                        }
-                        
-                        // 添加渲染后的公式
-                        try {
-                            var html = katex.renderToString(match[1].trim(), {
-                                displayMode: false,
-                                throwOnError: false,
-                                strict: false
-                            });
-                            var span = document.createElement('span');
-                            span.innerHTML = html;
-                            fragment.appendChild(span);
-                        } catch (e) {
-                            // 如果渲染失败，保留原文
-                            fragment.appendChild(document.createTextNode(match[0]));
-                        }
-                        
-                        lastIndex = pattern.lastIndex;
-                    }
-                    
-                    // 添加剩余文本
-                    if (lastIndex < text.length) {
-                        fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
-                    }
-                    
-                    // 替换原节点
-                    if (fragment.childNodes.length > 0) {
-                        parent.replaceChild(fragment, node);
-                    }
-                }
-            } else if (node.nodeType === Node.ELEMENT_NODE && node.className !== 'katex-display') {
-                // 跳过已处理的元素
-                if (!node.classList.contains('katex') && node.id !== 'post-content') {
-                    Array.from(node.childNodes).forEach(processTextNodes);
-                }
-            }
-        }
-        
-        Array.from(content.childNodes).forEach(processTextNodes);
-    });
-    </script>
 </body>
 </html>
