@@ -58,6 +58,17 @@ layout: default
         .nav-links a { color: #667eea; text-decoration: none; }
         .nav-links a:hover { text-decoration: underline; }
         .nav-links span { color: #cbd5e0; }
+        
+        /* MathJax formula styling */
+        .math-display {
+            margin: 1.5em 0;
+            padding: 15px 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+        .math-inline {
+            padding: 0 2px;
+        }
         @media (max-width: 768px) {
             .post-header h1 { font-size: 1.6em; }
             .post-content { padding: 25px; }
@@ -68,10 +79,10 @@ layout: default
     <script>
     window.MathJax = {
         tex: {
-            inlineMath: [['$', '$']],
-            displayMath: [['$$', '$$']],
-            processEscapes: true,
-            packages: {'[+]': ['ams', 'newcommand', 'configmacros', 'extpfeil']}
+            inlineMath: [['\(', '\)'], ['$', '$']],
+            displayMath: [['\[' , '\]']],
+            processEscapes: false,
+            packages: {'[+]': ['ams', 'newcommand', 'configmacros']}
         },
         svg: {
             fontCache: 'global',
@@ -80,10 +91,6 @@ layout: default
         startup: {
             ready: function() {
                 MathJax.startup.defaultReady();
-                MathJax.startup.promise.then(function() {
-                    // 渲染完成后检查未渲染的公式
-                    MathJax.typesetPromise();
-                });
             }
         }
     };
