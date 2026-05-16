@@ -64,10 +64,9 @@ layout: default
         }
     </style>
     
-    <!-- MathJax 2 - 原生支持 script 标签格式 -->
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
-            extensions: ["tex2jax.js"],
+            extensions: ["tex2jax.js", "AMSmath.js", "AMSsymbols.js"],
             jax: ["input/TeX", "output/HTML-CSS"],
             tex2jax: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -85,7 +84,7 @@ layout: default
             }
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS_HTML" async></script>
 </head>
 <body>
     <div class="post-container">
