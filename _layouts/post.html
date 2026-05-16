@@ -58,44 +58,32 @@ layout: default
         .nav-links a { color: #667eea; text-decoration: none; }
         .nav-links a:hover { text-decoration: underline; }
         .nav-links span { color: #cbd5e0; }
-        
-        /* MathJax formula styling */
-        .math-display {
-            margin: 1.5em 0;
-            padding: 15px 0;
-            overflow-x: auto;
-            overflow-y: hidden;
-        }
-        .math-inline {
-            padding: 0 2px;
-        }
         @media (max-width: 768px) {
             .post-header h1 { font-size: 1.6em; }
             .post-content { padding: 25px; }
         }
     </style>
     
-    <!-- MathJax 3 -->
+    <!-- MathJax 3 - 使用 tex/input 扩展处理 script 标签 -->
     <script>
     window.MathJax = {
-        tex: {
-            inlineMath: [['\(', '\)'], ['$', '$']],
-            displayMath: [['\[' , '\]']],
-            processEscapes: false,
-            packages: {'[+]': ['ams', 'newcommand', 'configmacros']}
+        loader: {
+            load: ['input/tex', 'output/chtml', 'ui/menu']
         },
-        svg: {
-            fontCache: 'global',
+        tex: {
+            inlineMath: [['$', '$']],
+            displayMath: [['$$', '$$']],
+            packages: {'[+]': ['ams', 'newcommand', 'configmacros', 'extpfeil']}
+        },
+        chtml: {
             scale: 1.1
         },
         startup: {
-            ready: function() {
-                MathJax.startup.defaultReady();
-            }
+            typeset: false
         }
     };
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
 </head>
 <body>
     <div class="post-container">
@@ -123,5 +111,14 @@ layout: default
             </div>
         </article>
     </div>
+    
+    <!-- 手动渲染 MathJax -->
+    <script>
+    if (window.MathJax) {
+        MathJax.startup.promise.then(function() {
+            MathJax.typesetPromise();
+        });
+    }
+    </script>
 </body>
 </html>
