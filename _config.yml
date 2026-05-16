@@ -1,27 +1,27 @@
 title: Zhengyi's Homepage
 author: Zhengyi
-description: 个人主页 | 学习记录 | 技术博客
+email: your-email@example.com
+description: 个人主页与博客
+baseurl: "" 
+url: "https://ustc-zhengyi2023.github.io"
+github_username: ustc-zhengyi2023
 
-# GitHub Pages
-timezone: Asia/Shanghai
-future: true
-theme: minima
-
-# Markdown 设置
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+  math_engine: nil
+  smart_quotes: [apos, apos, quot, quot]
+  entity_output: as_input
+  auto_ids: true
+  footnote_nr: 1
 
-# 导航栏链接
-header_pages:
-  - about.md
+timezone: Asia/Shanghai
+future: true
+show_drafts: false
+permalink: /posts/:title/
 
-# 博客设置
 collections:
   posts:
     output: true
-    permalink: /posts/:year-:month-:day-:title/
-
-# 分页
-paginate: 10
+    permalink: /posts/:name/

@@ -64,26 +64,28 @@ layout: default
         }
     </style>
     
-    <!-- MathJax 3 - 使用 tex/input 扩展处理 script 标签 -->
-    <script>
-    window.MathJax = {
-        loader: {
-            load: ['input/tex', 'output/chtml', 'ui/menu']
-        },
-        tex: {
-            inlineMath: [['$', '$']],
-            displayMath: [['$$', '$$']],
-            packages: {'[+]': ['ams', 'newcommand', 'configmacros', 'extpfeil']}
-        },
-        chtml: {
-            scale: 1.1
-        },
-        startup: {
-            typeset: false
-        }
-    };
+    <!-- MathJax 2 - 原生支持 script 标签格式 -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            extensions: ["tex2jax.js"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+            tex2jax: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            },
+            "HTML-CSS": {
+                scale: 110,
+                linebreaks: { automatic: true, width: "container" }
+            },
+            SVG: {
+                scale: 110,
+                linebreaks: { automatic: true, width: "container" }
+            }
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js" async></script>
 </head>
 <body>
     <div class="post-container">
@@ -111,14 +113,5 @@ layout: default
             </div>
         </article>
     </div>
-    
-    <!-- 手动渲染 MathJax -->
-    <script>
-    if (window.MathJax) {
-        MathJax.startup.promise.then(function() {
-            MathJax.typesetPromise();
-        });
-    }
-    </script>
 </body>
 </html>
